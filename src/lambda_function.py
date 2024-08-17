@@ -1,54 +1,33 @@
 import random
 
 def lambda_handler(event, context):
-    # Star Trek themed responses (fortunes)
-    fortunes = [
-        "Sensors show no signs of life, Captain.",
-        "Position is holding steady, sir.",
-        "The crew is in good health, Captain.",
-        "Channel open to Starfleet, awaiting orders.",
-        "Warp drive will be ready in five minutes, Captain!",
-        "No signs of intelligent life detected, Captain.",
-        "Enemy vessels detected on long-range sensors.",
-        "The odds of survival are 3,720 to 1, Captain.",
-        "Shields raised, Captain. We're ready for anything.",
-        "Course plotted, Captain. Ready to engage.",
-        "All systems are functioning within normal parameters, Captain.",
-        "Scanners are picking up a strange energy signature.",
-        "Engineering reports we can give you warp speed in 30 seconds.",
-        "Captain, the enemy ship has cloaked.",
-        "We're receiving a distress signal from a nearby planet, Captain.",
-        "Shields are at full strength, Captain.",
-        "Phasers are charged and ready, Captain.",
-        "Life support is stable, Captain.",
-        "Long-range communications are fully operational, Captain.",
-        "We've reached the neutral zone, Captain. Awaiting further orders."
+    # List of questions and corresponding answers
+    kirk_conversations = [
+        ["Mr. Spock, any readings on the sensors?", "Sensors show no signs of life, Captain."],
+        ["Sulu, what's our position?", "Position is holding steady, sir."],
+        ["Bones, what's the condition of the crew?", "The crew is in good health, Captain."],
+        ["Uhura, open a channel to Starfleet.", "Channel open to Starfleet, awaiting orders."],
+        ["Scotty, how much longer until we have warp drive?", "Warp drive will be ready in five minutes, Captain!"],
+        ["Spock, any signs of intelligent life?", "No signs of intelligent life detected, Captain."],
+        ["Chekov, scan for enemy vessels.", "Enemy vessels detected on long-range sensors."],
+        ["Mr. Spock, what are the odds of surviving this?", "The odds of survival are 3,720 to 1, Captain."],
+        ["Lieutenant, raise the shields!", "Shields raised, Captain. We're ready for anything."],
+        ["Helm, set a course for the nearest starbase.", "Course plotted, Captain. Ready to engage."],
+        ["Scanners picking up anything unusual?", "Scanners are picking up a strange energy signature."],
+        ["Scotty, when can we achieve warp speed?", "Engineering reports we can give you warp speed in 30 seconds."],
+        ["Captain, what's the status of the enemy ship?", "Captain, the enemy ship has cloaked."],
+        ["We’re receiving a signal?", "We're receiving a distress signal from a nearby planet, Captain."],
+        ["How are the shields holding?", "Shields are at full strength, Captain."],
+        ["Phasers ready?", "Phasers are charged and ready, Captain."],
+        ["Life support status?", "Life support is stable, Captain."],
+        ["Communications systems operational?", "Long-range communications are fully operational, Captain."],
+        ["Are we at the Neutral Zone?", "We've reached the neutral zone, Captain. Awaiting further orders."]
     ]
 
-    # Kirk-inspired bridge questions
-    kirk_questions = [
-        "Mr. Spock, any readings on the sensors?",
-        "Sulu, what's our position?",
-        "Bones, what's the condition of the crew?",
-        "Uhura, open a channel to Starfleet.",
-        "Scotty, how much longer until we have warp drive?",
-        "Spock, any signs of intelligent life?",
-        "Chekov, scan for enemy vessels.",
-        "Mr. Spock, what are the odds of surviving this?",
-        "Lieutenant, raise the shields!",
-        "Helm, set a course for the nearest starbase."
-    ]
+    # Select a random conversation (question-answer pair)
+    question, answer = random.choice(kirk_conversations)
 
-    # Get query parameters (if any)
-    message_type = event.get('queryStringParameters', {}).get('messageType', 'fortune')
-
-    # Choose between fortune or Kirk question
-    if message_type == 'question':
-        response = random.choice(kirk_questions)
-    else:
-        response = random.choice(fortunes)
-
-    # Return the response with CORS headers
+    # Return the conversation with CORS headers
     return {
         'statusCode': 200,
         'headers': {
@@ -57,5 +36,5 @@ def lambda_handler(event, context):
             'Access-Control-Allow-Methods': 'GET',  # CORS: Allow only GET requests
             'Access-Control-Allow-Headers': 'Content-Type',
         },
-        'body': f'{{"message": "{response}"}}'
+        'body': f'{{"question": "{question}", "answer": "{answer}"}}'
     }
