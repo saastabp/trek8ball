@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Star Trek Magic 8-Ball API with Lambda Proxy Integration
+Resources:
+  StarTrekMagic8BallFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.9
+      CodeUri: s3://magic-8-ball-83748998/7dad24f7b9d02477473becdec4403829
+      Events:
+        Magic8BallAPI:
+          Type: Api
+          Properties:
+            Path: /8ball
+            Method: GET
+      Environment:
+        Variables:
+          STAGE:
+            Ref: Stage
+    Metadata:
+      SamResourceId: StarTrekMagic8BallFunction
+Outputs:
+  ApiUrl:
+    Description: API Gateway endpoint URL
+    Value:
+      Fn::Sub: https://${StarTrekMagic8BallFunction}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/8ball
+    Export:
+      Name: Magic8BallApiUrl
+Parameters:
+  Stage:
+    Type: String
+    Default: dev
+    Description: The API Gateway deployment stage (e.g., dev, prod)
