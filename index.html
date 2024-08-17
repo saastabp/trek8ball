@@ -78,34 +78,18 @@
     </div>
 
     <script>
-        const questionUrl = 'https://q656ae5oo7.execute-api.us-east-1.amazonaws.com/Prod/8ball?messageType=question';
-        const answerUrl = 'https://q656ae5oo7.execute-api.us-east-1.amazonaws.com/Prod/8ball?messageType=answer';
+        const apiUrl = 'https://q656ae5oo7.execute-api.us-east-1.amazonaws.com/Prod/8ball';
 
-        function getFortune() {
-            getResponse();
-            getQuestion();
-        }
-
-        async function getQuestion() {
+        async function getFortune() {
             try {
-                const response = await fetch(questionUrl);
+                const response = await fetch(apiUrl);
                 const data = await response.json();
-                document.getElementById('command-button').textContent = data.message;
+                document.getElementById('command-button').textContent = data.question;
+                document.getElementById('fortune').textContent = data.answer;
             } catch (error) {
                 document.getElementById('command-button').textContent = "Error fetching fortune. Try again!";
             }
         }
-
-        async function getResponse() {
-            try {
-                const answerResponse = await fetch(answerUrl);
-                const answerData = await answerResponse.json();
-                document.getElementById('fortune').textContent = answerData.message;
-            } catch (error) {
-                document.getElementById('fortune').textContent = "Error fetching fortune. Try again!";
-            }
-        }
-
 
 
         // Fetch the first fortune on page load
