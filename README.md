@@ -55,12 +55,12 @@ function to handle CORS:
 
 Ok, that looked good, but I noticed this in the gateway handler section of the SAM template:
 
-'''
+```
     Cors:
         AllowMethods: "'GET'"
         AllowHeaders: "'Content-Type'"
         AllowOrigin: "'*'"
-'''
+```
 
 I did not expect that as I specifically asked for a proxy integration.  The gateway should not
 implement CORS processing in that case, delegating that responsibility to the service.  Could
