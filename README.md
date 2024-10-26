@@ -38,7 +38,7 @@ in the response, so I asked for this:
 
 > Yes, create a SAM template to add a web service as a front end.  Use a lambda proxy so that CORS is properly handled.  Update the lambda response if necessary
 
-I got back what looked like a reasonable `template.yaml` file, and it also gave me the update version of the lambda
+I got back what looked like a reasonable `template.yaml` file, and it also gave me the updated version of the lambda
 function to handle CORS:
 
 ```
